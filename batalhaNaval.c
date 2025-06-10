@@ -2,58 +2,96 @@
 
 #define LINHAS 10
 #define COLUNAS 10
+#define TAM_HABILIDADE 5
 
-//2 é de um time, 3 de outro; :D batalha naval! THE GAME!
+
+//tem que estar fora o int main, pois teram variaveis que só vou usar aqui;
+int aplicarHabilidade(int matriz[LINHAS][COLUNAS], int habilidade[TAM_HABILIDADE][TAM_HABILIDADE], int linhaOrigem, int colunaOrigem) {
+    int centro = 2; // Centro da matriz 5x5 (posição [2][2]) pra definir o centro basta criar didir a habilidade por 2, independente se fica 1 ou da 0, é o nunero 5/2 = 2
+
+    for (int i = 0; i < TAM_HABILIDADE; i++) {          // Varre as linhas da matriz da habilidade
+        for (int j = 0; j < TAM_HABILIDADE; j++) {      // Varre as colunas da matriz da habilidade
+            if (habilidade[i][j] == 1) {   // Só aplica onde estiver marcado com 1
+                int linhaAlvo = linhaOrigem - centro + i;     // Calcula linha no tabuleiro
+                int colunaAlvo = colunaOrigem - centro + j;   // Calcula coluna no tabuleiro
+
+                // Não vai deixar sair dos limites do tabuleiro
+                if (linhaAlvo >= 0 && linhaAlvo < LINHAS && colunaAlvo >= 0 && colunaAlvo < COLUNAS) {
+                    matriz[linhaAlvo][colunaAlvo] = 5;  // Marca como área afetada
+                }
+            }
+        }
+    }
+
+    return 0; // Indica que terminou normalmente
+}
+
 int main() {
     int matriz[LINHAS][COLUNAS];
 
     // Inicializar matriz com 0 (mar)
     for (int i = 0; i < LINHAS; i++) {
         for (int j = 0; j < COLUNAS; j++) {
-            matriz[i][j] = 0; //faz quando a tabela for impressa aparecer só o numero 0, se n tivesse ia ser uma mini tabuada
+            matriz[i][j] = 0;
         }
     }
 
     // Posicição navio vertical (1)
-    int linha1 = 3; // A contagem sempre começa no 0, ou 2 ali, significa que vai mover 0 e 1, qe an tabela vai cair no nº3;
-    int coluna1 = 4; // pela mesma logica que em cima, vai ir ABC e aprar no D. Com os dois juntos começa na casa D3;
-    for (int i = 0; i < 3; i++) { //com isso to falando, o i que começa vale 0, acrescenta 3 vezes (0,1 e 2) e para;
-        matriz[linha1 + i][coluna1] = 3;      //aqui direciona pra onde o acrescimo vai, como ta no linha o "+ i" ele vai acrescentar 
-    }                                         //a partir do ponto inicial 3 vezes em direção ao 10, colocando o número 3 que pedi;
+    int linha1 = 3;
+    int coluna1 = 4;
+    for (int i = 0; i < 3; i++) {
+        matriz[linha1 + i][coluna1] = 3;
+    }
 
     // Posicição navio horizontal (2)
-    int linha2 = 8; 
-    int coluna2 = 1; 
+    int linha2 = 8;
+    int coluna2 = 1;
     for (int i = 0; i < 3; i++) {
-        matriz[linha2][coluna2 + i] = 2; //como no de cima, aqui ta na coluna, então vai percorres as caras a partir da inicial, horizontalmente
+        matriz[linha2][coluna2 + i] = 2;
     }
 
     // Vertical diagonal simples (3)
     int linha3 = 7;
-    int coluna3 = 5; 
+    int coluna3 = 5;
     for (int i = 0; i < 3; i++) {
-    matriz[linha3 + i][coluna3 + i] = 3; // aqui é simples, quando anda um pra direita, anda um pra baixo, por 3 vezes, i = 0 1 2. parando no 3
+        matriz[linha3 + i][coluna3 + i] = 3;
     }
 
     // Navio na diagonal mais difícil (4)
-    int linha4 = 1;    
-    int coluna4 = 8;   
+    int linha4 = 1;
+    int coluna4 = 8;
     for (int i = 0; i < 3; i++) {
-    matriz[linha4 + i][coluna4 - i] = 2;
-}
+        matriz[linha4 + i][coluna4 - i] = 2;
+    }
+
+    //###MATRIZES DE HABILIDADE (5x5)### Foi complicado chegar na conclusão q tinha q desenhar, espero q tenha outra forma kk eu resolvi fazer como o professor e poupar espaço na vertical.
+    int cone[TAM_HABILIDADE][TAM_HABILIDADE] = {{0, 0, 1, 0, 0}, {0, 1, 1, 1, 0}, {1, 1, 1, 1, 1}, {0, 0, 0, 0, 0},{0, 0, 0, 0, 0}
+    };
+
+    int cruz[TAM_HABILIDADE][TAM_HABILIDADE] = {{0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {1, 1, 1, 1, 1}, {0, 0, 1, 0, 0},{0, 0, 1, 0, 0}
+    };
+
+    int octaedro[TAM_HABILIDADE][TAM_HABILIDADE] = {{0, 0, 1, 0, 0}, {0, 1, 1, 1, 0}, {1, 1, 1, 1, 1}, {0, 1, 1, 1, 0}, {0, 0, 1, 0, 0} 
+    };
+
+    aplicarHabilidade(matriz, cone, 2, 4);      // origem linha 2, coluna 4 (terceira linha, quinta coluna)
+    aplicarHabilidade(matriz, cruz, 5, 7);      // origem linha 5, coluna 7
+    aplicarHabilidade(matriz, octaedro, 7, 2);  // origem linha 7, coluna 2
+
+    printf("BATALHA NAVAL!!!! THE GAME\n\n");
 
     // letras A a J no cabeçalho
-    printf("   "); // Espaço para alinhar com os números da esquerda
+    printf("   ");
     for (char letra = 'A'; letra <= 'J'; letra++) {
-        printf(" %c", letra);// o espaço no %c faz dar margem e um espaçamento melhor
+        printf(" %c", letra);
     }
-    printf("\n");//importante pra formatação e parecer um jogo da velha
+    printf("\n");
 
     // linhas numeradas de 1 a 10
     for (int i = 0; i < LINHAS; i++) {
-        printf("%2d ", i + 1); // Números da linha (1 a 10) o "i + 1"" faz a contagem começar do 1 (i = 0, 0 + 1 = 1). (o %2d deixa bonitinho e organizado)
+        printf("%2d ", i + 1);
         for (int j = 0; j < COLUNAS; j++) {
-            printf(" %d", matriz[i][j]); //com os 2 for aqui, to fazendo imprimir a tabela 10 x 10, que já denifi no inico que apareceria paenas o nº 0;
+            printf(" %d", matriz[i][j]);
         }
         printf("\n");
     }
@@ -63,28 +101,4 @@ int main() {
     return 0;
 }
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
-
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
-
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
-
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+//cara, esse foi difícil...
