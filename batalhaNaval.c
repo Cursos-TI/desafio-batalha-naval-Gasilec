@@ -1,15 +1,14 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define LINHAS 10;
+#define COLUNAS 10;
 
 int main() {
-    int matriz[10][10];
+    int matriz[LINHAS][COLUNAS];
 
     // Inicializar matriz com 0 (mar)
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
+    for (int i = 0; i < LINHAS; i++) {
+        for (int j = 0; j < COLUNAS; j++) {
             matriz[i][j] = 0; //faz quando a tabela for impressa aparecer só o numero 0, se n tivesse ia ser uma mini tabuada
         }
     }
@@ -28,6 +27,12 @@ int main() {
         matriz[linha2][coluna2 + i] = 3; //como no de cima, aqui ta na coluna, então vai percorres as caras a partir da inicial, horizontalmente
     }
 
+    // Vertical diagonal simples (3)
+    int linha3 = 6; // linha 2
+    int coluna3 = 5; // coluna B
+    for (int i = 0; i < 3; i++) {
+    matriz[linha3 + i][coluna3 + i] = 3;
+
     // letras A a J no cabeçalho
     printf("   "); // Espaço para alinhar com os números da esquerda
     for (char letra = 'A'; letra <= 'J'; letra++) {
@@ -36,9 +41,9 @@ int main() {
     printf("\n");//importante pra formatação e parecer um jogo da velha
 
     // linhas numeradas de 1 a 10
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < LINHAS; i++) {
         printf("%2d ", i + 1); // Números da linha (1 a 10) o "i + 1"" faz a contagem começar do 1 (i = 0, 0 + 1 = 1). (o %2d deixa bonitinho e organizado)
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < COLUNAS; j++) {
             printf(" %d", matriz[i][j]); //com os 2 for aqui, to fazendo imprimir a tabela 10 x 10, que já denifi no inico que apareceria paenas o nº 0;
         }
         printf("\n");
@@ -48,10 +53,6 @@ int main() {
 
     return 0;
 }
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
 
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
