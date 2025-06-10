@@ -1,8 +1,9 @@
 #include <stdio.h>
 
-#define LINHAS 10;
-#define COLUNAS 10;
+#define LINHAS 10
+#define COLUNAS 10
 
+//2 é de um time, 3 de outro; :D batalha naval! THE GAME!
 int main() {
     int matriz[LINHAS][COLUNAS];
 
@@ -21,17 +22,25 @@ int main() {
     }                                         //a partir do ponto inicial 3 vezes em direção ao 10, colocando o número 3 que pedi;
 
     // Posicição navio horizontal (2)
-    int linha2 = 8; // linha 8
-    int coluna2 = 1; // coluna B
+    int linha2 = 8; 
+    int coluna2 = 1; 
     for (int i = 0; i < 3; i++) {
-        matriz[linha2][coluna2 + i] = 3; //como no de cima, aqui ta na coluna, então vai percorres as caras a partir da inicial, horizontalmente
+        matriz[linha2][coluna2 + i] = 2; //como no de cima, aqui ta na coluna, então vai percorres as caras a partir da inicial, horizontalmente
     }
 
     // Vertical diagonal simples (3)
-    int linha3 = 6; // linha 2
-    int coluna3 = 5; // coluna B
+    int linha3 = 7;
+    int coluna3 = 5; 
     for (int i = 0; i < 3; i++) {
-    matriz[linha3 + i][coluna3 + i] = 3;
+    matriz[linha3 + i][coluna3 + i] = 3; // aqui é simples, quando anda um pra direita, anda um pra baixo, por 3 vezes, i = 0 1 2. parando no 3
+    }
+
+    // Navio na diagonal mais difícil (4)
+    int linha4 = 1;    
+    int coluna4 = 8;   
+    for (int i = 0; i < 3; i++) {
+    matriz[linha4 + i][coluna4 - i] = 2;
+}
 
     // letras A a J no cabeçalho
     printf("   "); // Espaço para alinhar com os números da esquerda
